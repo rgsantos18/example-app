@@ -13,7 +13,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        // route: /product
+        // view - all products
+        $products = Product::paginate(10);
+        return view('product.index', ['products' => $products->toArray()]);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -14,9 +15,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/home', 'index');
 });
 
-Route::get('/product', function () {
-    return view('product');
-});
-Route::get('/product/{id}', function ($id) {
-    return [$id];
+Route::controller(ProductController::class)->group(function () {
+   Route::get('/product', 'index'); // function index()
+   Route::get('/product/{id}', 'show'); // function show($id)
 });
