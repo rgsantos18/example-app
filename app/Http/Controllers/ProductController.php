@@ -25,6 +25,7 @@ class ProductController extends Controller
     public function create()
     {
         // view - add page Product
+        return view('product.create');
     }
 
     /**
@@ -33,14 +34,17 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         // saving post variables <-> data Product
+        dd($request->all());
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show($id)
     {
         // view - 1 single record /product/1
+        $product = Product::find($id);
+        return view('product.show', ['product' => $product->toArray()]);
     }
 
     /**

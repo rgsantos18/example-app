@@ -2,6 +2,9 @@
 @section('content')
     <h1>Products</h1>
     <div class="row my-3">
+        <p>
+            <a href="/product/add" class="btn btn-sm btn-primary"><i class="mdi mdi-plus"></i> Add</a>
+        </p>
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <thead>

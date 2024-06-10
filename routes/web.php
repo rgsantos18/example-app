@@ -17,5 +17,8 @@ Route::controller(HomeController::class)->group(function () {
 
 Route::controller(ProductController::class)->group(function () {
    Route::get('/product', 'index'); // function index()
+   Route::get('/product/add', 'create'); // function create()
+   Route::post('/product', 'store'); // function store()
    Route::get('/product/{id}', 'show'); // function show($id)
+   // Route::get('/product/{id}/edit', 'edit');
 });
