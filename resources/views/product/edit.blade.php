@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="row">
-        <h4>Add Product</h4>
+        <h4>Edit | {{ $product['product_name'] ?? '' }}</h4>
         <div class="col-lg-6 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">

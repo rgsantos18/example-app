@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -34,7 +35,12 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         // saving post variables <-> data Product
-        dd($request->all());
+
+        $validated = $request->validated();
+        Product::create($validated);
+
+        // redirect to /product
+        return redirect('/product')->with('success', 'Product created successfully.');
     }
 
     /**
@@ -66,8 +72,10 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
         // delete - 1 single record /product/1
+        Product::destroy($id);
+        return redirect('/product')->with('success', 'Product deleted successfully.');
     }
 }
