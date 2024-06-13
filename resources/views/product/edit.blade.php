@@ -1,45 +1,24 @@
 @extends('layouts.app')
 @section('content')
     <div class="row">
-        <h4>Edit | {{ $product['product_name'] ?? '' }}</h4>
+        <h4><i class="mdi mdi-pencil-box"></i> {{ $product['product_name'] ?? '' }}</h4>
         <div class="col-lg-6 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <form action="/product" class="needs-validation" novalidate method="POST">
+                    <form action="/product/{{ $product['id'] }}" class="needs-validation" novalidate method="POST">
                         @csrf
+                        @method('PUT')
                         <p>Description: </p>
                         <div class="table-responsive">
                             <table class="table">
                                 <tbody>
-                                    {{-- <tr>
-                                        <td>Currency<sup class="text-danger">*</sup></td>
-                                        <td>
-                                            <select name="currency" id=""
-                                                class="form-select {{ $errors->has('currency') ? 'is-invalid' : '' }}"
-                                                required>
-                                                <option value="">select</option>
-                                                <option value="USD">USD</option>
-                                                <option value="EUR">EUR</option>
-                                                <option value="INR">INR</option>
-                                            </select>
-
-                                            @if ($errors->has('currency'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('currency') }}</strong>
-                                                </span>
-                                            @else
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>Please provide a product name</strong>
-                                                </span>
-                                            @endif
-                                        </td>
-                                    </tr> --}}
                                     <tr>
                                         <td>Product Name<sup class="text-danger">*</sup></td>
                                         <td>
                                             <input type="text" name="product_name"
                                                 class="form-control {{ $errors->has('product_name') ? 'is-invalid' : '' }}"
-                                                value="{{ old('product_name') }}" required placeholder="Product Name">
+                                                value="{{ $product['product_name'] ?? old('product_name') }}" required
+                                                placeholder="Product Name">
 
                                             @if ($errors->has('product_name'))
                                                 <span class="invalid-feedback" role="alert">
@@ -56,7 +35,8 @@
                                         <td>Price<sup class="text-danger">*</sup></td>
                                         <td>
                                             <input type="number" name="price" class="form-control"
-                                                value="{{ old('price') }}" required placeholder="Price">
+                                                value="{{ $product['price'] ?? old('price') }}" required
+                                                placeholder="Price">
                                             @if ($errors->has('price'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('price') }}</strong>
@@ -73,7 +53,8 @@
                                         <td>
                                             <input type="number" name="stock"
                                                 class="form-control {{ $errors->has('stock') ? 'is-invalid' : '' }}"
-                                                value="{{ old('stock') }}" required placeholder="Stock">
+                                                value="{{ $product['stock'] ?? old('stock') }}" required
+                                                placeholder="Stock">
                                             @if ($errors->has('stock'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('stock') }}</strong>
@@ -89,7 +70,9 @@
                                         <td>Description</td>
                                         <td>
                                             <textarea name="description" class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" required
-                                                placeholder="Description"></textarea>
+                                                placeholder="Description">
+                                                {{ $product['description'] ?? old('description') }}
+                                            </textarea>
                                             @if ($errors->has('description'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('description') }}</strong>
@@ -105,7 +88,8 @@
                                         <td>Manufacturer<sup class="text-danger">*</sup></td>
                                         <td>
                                             <input type="text" name="manufacturer" class="form-control" required
-                                                placeholder="Manufacturer">
+                                                placeholder="Manufacturer"
+                                                value="{{ $product['manufacturer'] ?? old('manufacturer') }}">
                                             @if ($errors->has('manufacturer'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('manufacturer') }}</strong>
@@ -121,7 +105,8 @@
                                         <td>Manufacturer Contact<sup class="text-danger">*</sup></td>
                                         <td>
                                             <input type="text" name="manufacturer_contact" class="form-control" required
-                                                placeholder="Contact No.">
+                                                placeholder="Contact No."
+                                                value="{{ $product['manufacturer_contact'] ?? old('manufacturer_contact') }}">
                                             @if ($errors->has('manufacturer_contact'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('manufacturer_contact') }}</strong>
@@ -137,7 +122,8 @@
                                         <td>Manufacturer Email<sup class="text-danger">*</sup></td>
                                         <td>
                                             <input type="email" name="manufacturer_email" class="form-control" required
-                                                placeholder="Email">
+                                                placeholder="Email"
+                                                value="{{ $product['manufacturer_email'] ?? old('manufacturer_email') }}">
                                             @if ($errors->has('manufacturer_email'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('manufacturer_email') }}</strong>
@@ -153,7 +139,8 @@
                                         <td>Manufacturer Address</td>
                                         <td>
                                             <input type="text" name="manufacturer_address" class="form-control"
-                                                placeholder="Not required">
+                                                placeholder="Not required"
+                                                value="{{ $product['manufacturer_address'] ?? old('manufacturer_address') }}">
                                         </td>
                                     </tr>
                                 </tbody>

@@ -43,7 +43,8 @@
                     <p class="text-center mt-3">
                         <a href="/product" class="text-decoration-none mx-2"><i class="mdi mdi-keyboard-backspace"></i>
                             Back</a> |
-                        <a href="#" class="text-decoration-none mx-2"><i class="mdi mdi-pencil"></i> Edit</a>
+                        <a href="/product/{{ $product['id'] }}/edit" class="text-decoration-none mx-2"><i
+                                class="mdi mdi-pencil"></i> Edit</a>
                     </p>
                 </div>
             </div>

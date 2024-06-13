@@ -1,4 +1,13 @@
 @extends('layouts.app')
+
+@section('search')
+    <form class="search-form" action="/product/search" method="GET">
+        <i class="icon-search"></i>
+        <input type="search" name="q" class="form-control" placeholder="Search Here" title="Search here"
+            value="{{ request('q') }}">
+    </form>
+@endsection
+
 @section('content')
     <h1>Products</h1>
     <div class="row my-3">
@@ -8,6 +17,11 @@
                 <div class="alert alert-success alert-dismissible fade show" role="alert">{{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
+            @endif
+
+            @if (request('q'))
+                <span class="me-5" style="float: right!important;">Search result for:
+                    <strong>{{ request('q') }}</strong></span>
             @endif
         </p>
         <div class="table-responsive">
@@ -41,13 +55,16 @@
                                                     class="mdi mdi-eye"></i> View</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="/product/{{ $product['id'] }}"><i
+                                            <a class="dropdown-item" href="/product/{{ $product['id'] }}/edit"><i
                                                     class="mdi mdi-pencil"></i> Edit</a>
                                         </li>
                                         <li>
                                             <form action="/product/{{ $product['id'] }}" method="post">
                                                 @csrf
                                                 @method('delete')
+                                                <input type="hidden" name="current_page"
+                                                    value="{{ $products['current_page'] }}" />
+
                                                 <button type="button" class="dropdown-item text-danger"
                                                     onclick="(confirm('Are you sure?') ? this.parentElement.submit() : '')"><i
                                                         class="mdi mdi-delete"></i>
@@ -73,13 +90,24 @@
             </table>
         </div>
     </div>
+
+    <!-- Pagination -->
     <div class="d-flex justify-content-center">
         <nav aria-label="Page navigation example">
             <ul class="pagination">
+                <!-- First Page Url -->
+                <li class="page-item"><a class="page-link {{ $products['current_page'] == 1 ? 'disabled' : '' }}"
+                        href="{{ $products['first_page_url'] ?? '#' }}">First Page</a></li>
+
                 @foreach ($products['links'] as $page)
                     <li class="page-item"><a class="page-link {{ $page['active'] ? 'active' : '' }}"
                             href="{{ $page['url'] ?? '#' }}">{!! $page['label'] !!}</a></li>
                 @endforeach
+
+                <!-- Last Page Url -->
+                <li class="page-item"><a
+                        class="page-link {{ $products['current_page'] == $products['last_page'] ? 'disabled' : '' }}"
+                        href="{{ $products['last_page_url'] ?? '#' }}">Last Page</a></li>
             </ul>
         </nav>
     </div>

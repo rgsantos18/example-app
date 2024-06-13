@@ -17,6 +17,7 @@ class ProductController extends Controller
         // route: /product
         // view - all products
         $products = Product::paginate(10);
+        // return $products->toArray();
         return view('product.index', ['products' => $products->toArray()]);
     }
 
@@ -56,26 +57,49 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        // view - edit page product/1
+        // view - edit page product/1/edit
+        $product = Product::find($id);
+        return view('product.edit', ['product' => $product->toArray()]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update($id, UpdateProductRequest $request)
     {
         // saving - post variables for updating
+
+        $validated = $request->validated();
+        Product::find($id)->update($validated);
+        
+        // redirect to /product
+        return redirect('/product')->with('success', 'Product updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        // delete - 1 single record /product/1
+        // delete - 1 single record /product/1->appends($request->query())
         Product::destroy($id);
-        return redirect('/product')->with('success', 'Product deleted successfully.');
+        $query_param = $request->current_page ? '?page=' . $request->current_page : '';
+        return redirect('/product' . $query_param)->with('success', 'Product deleted successfully.');
+    }
+
+    public function search(Request $request)
+    {
+        $products = Product::where('product_name', 'like', '%' . $request->q . '%')
+            ->orWhere('price', 'like', '%' . $request->q . '%')
+            ->orWhere('stock', 'like', '%' . $request->q . '%')
+            ->orWhere('description', 'like', '%' . $request->q . '%')
+            ->orWhere('manufacturer', 'like', '%' . $request->q . '%')
+            ->orWhere('manufacturer_email', 'like', '%' . $request->q . '%')
+            ->orWhere('manufacturer_contact', 'like', '%' . $request->q . '%')
+            ->orWhere('manufacturer_address', 'like', '%' . $request->q . '%')
+            ->paginate(10)->appends($request->query());
+        return view('product.index', ['products' => $products->toArray()]);
     }
 }
