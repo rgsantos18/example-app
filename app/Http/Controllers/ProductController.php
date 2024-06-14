@@ -5,10 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        if(!Auth::user()) {
+            abort(403);
+        }
+    }
     /**
      * Display a listing of the resource.
      */
