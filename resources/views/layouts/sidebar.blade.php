@@ -12,4 +12,10 @@
                 <span class="menu-title">Product</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('/logout') }}">
+                <i class="mdi mdi-power menu-icon"></i>
+                <span class="menu-title">Logout</span>
+            </a>
+        </li>
 </nav>

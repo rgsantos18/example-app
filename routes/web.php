@@ -3,9 +3,19 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return view('login');
+});
+
+Route::controller(AuthController::class)->group(function () {
+    Route::get('/register', 'register');
+    Route::post('/register', 'store');
+    Route::get('/login', 'login');
+    Route::post('/login', 'authenticate');
+    Route::get('/logout', 'logout');
 });
 
 // Route::get('/home','HomeController@index'); Laravel version 6 - 9
