@@ -10,12 +10,12 @@ use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
-    function register()
+    public function register()
     {
         return view('register');
     }
 
-    function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required',
@@ -35,12 +35,12 @@ class AuthController extends Controller
         return redirect('/')->with('success', 'Account created successfully');
     }
 
-    function login()
+    public function login()
     {
         return view('login');
     }
 
-    function authenticate(Request $request)
+    public function authenticate(Request $request)
     {
         $request->validate([
             'user' => 'required',
@@ -58,7 +58,7 @@ class AuthController extends Controller
         return redirect('/home')->with('success', 'Login successful');
     }
 
-    function logout(Request $request)
+    public function logout(Request $request)
     {
         $request->session()->forget('user');
         return redirect('/login')->with('success', 'Logout successful');
